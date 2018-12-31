@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges , Output, EventEmitter } from '@angular/core';
 import { Employee } from '../models/employee.model';
 
 @Component({
@@ -8,18 +8,26 @@ import { Employee } from '../models/employee.model';
 })
 
 export class DisplayEmployeeComponent implements OnInit {
-  private _employee: Employee;
   @Input()
-  set employee(val: Employee) {
-    // console.log('Previous : ' + (this._employee ? this._employee.name : 'NULL'));
-    // console.log('Current : ' + val.name);
-    this._employee = val;
+  employee: Employee;
+  
+
+  @Output() notify: EventEmitter<Employee> = new EventEmitter<Employee>();
+
+  handleClick() {
+    this.notify.emit(this.employee);
   }
+  
+  // set employee(val: Employee) {
+  //   // console.log('Previous : ' + (this._employee ? this._employee.name : 'NULL'));
+  //   // console.log('Current : ' + val.name);
+  //   this._employee = val;
+  // }
 
   // This getter is called when reading and displaying data
-  get employee(): Employee {
-    return this._employee;
-  }
+  // get employee(): Employee {
+  //   return this._employee;
+  // }
 
   //@Input()
   //employee: Employee;
