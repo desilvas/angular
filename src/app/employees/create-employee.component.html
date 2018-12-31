@@ -130,13 +130,13 @@
         </button>
       </div>
 
-      <div ngModelGroup="passwordGroup" appConfirmEqualValidator [class.has-error]="confirmPassword.touched && confirmPassword.invalid">
+      <!-- <div ngModelGroup="passwordGroup" #passwordGroup="ngModelGroup" appConfirmEqualValidator [class.has-error]="passwordGroup.touched && passwordGroup.invalid">
 
-
+        (input)="confirmPassword.control.updateValueAndValidity()" 
 
         <div class="form-group" [class.has-error]="password.touched && password.invalid">
           <label for="password" class="control-label">Password</label>
-          <input   (input)="confirmPassword.control.updateValueAndValidity()"  id="password" required type="text" class="form-control" name="password" [(ngModel)]="employee.password"
+          <input id="password" required type="text" class="form-control" name="password" [(ngModel)]="employee.password"
             #password="ngModel">
           <span class="help-block" *ngIf="password.touched && password.errors?.required">
             Password is required
@@ -144,20 +144,18 @@
         </div>
         <div class="form-group" [class.has-error]="confirmPassword.touched && confirmPassword.invalid">
           <label for="confirmPassword" class="control-label">Confirm Password</label>
-          <input name="confirmPassword"  required id="confirmPassword" type="text"
-            class="form-control" [(ngModel)]="employee.confirmPassword" #confirmPassword="ngModel">
+          <input name="confirmPassword" required id="confirmPassword" type="text" class="form-control" [(ngModel)]="employee.confirmPassword"
+            #confirmPassword="ngModel">
           <span class="help-block" *ngIf="confirmPassword.touched && confirmPassword.errors?.required">
             Confirm Password is required
           </span>
-          <span class="help-block" *ngIf="confirmPassword.touched && confirmPassword.errors?.notEqual &&
-          !confirmPassword.errors?.required">
+          <span class="help-block" *ngIf="passwordGroup.touched && passwordGroup.errors?.notEqual &&
+          !passwordGroup.errors?.required">
             Password and Confirm Password does not match
           </span>
         </div>
-      </div>
+      </div> -->
     </div>
-
-
 
     <div class="panel-footer">
       <button [disabled]="employeeForm.invalid" class="btn btn-primary" type="submit">Save</button>

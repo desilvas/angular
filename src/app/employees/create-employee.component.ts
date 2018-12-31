@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Department } from '../models/departments.model';
 import { Employee } from '../models/employee.model';
+import { Router } from '@angular/router';
+import { EmployeeService } from '../employees/employee.service';
 
 @Component({
   selector: 'app-create-employee',
@@ -24,8 +26,8 @@ export class CreateEmployeeComponent implements OnInit {
     department: "select",
     isActive: null,
     photoPath: null
-  }; 
-  
+  };
+
   departments: Department[] = [
     { id: 1, name: 'Help Desk' },
     { id: 2, name: 'HR' },
@@ -33,8 +35,8 @@ export class CreateEmployeeComponent implements OnInit {
     { id: 4, name: 'Payroll' }
   ];
 
-  constructor() { }
-
+  constructor(private _employeeService: EmployeeService,
+    private _router: Router) { }
   togglePhotoPreview() {
     this.previewPhoto = !this.previewPhoto;
   }
@@ -43,7 +45,8 @@ export class CreateEmployeeComponent implements OnInit {
 
   }
 
-  saveEmployee(employee: Employee): void {
-    console.log(employee);
+  saveEmployee(): void {
+    this._employeeService.save(this.employee);
+    this._router.navigate(['list']);
   }
 }
