@@ -6,7 +6,8 @@
 
 <div class="panel panel-primary" *ngFor="let employee of employees">
   <!-- <app-display-employee [employee]="employee" (notify)="handleNotify($event)"></app-display-employee> -->
-  <div (click)="h1Variable.innerHTML = childComponent.getNameAndGender()" >
+  <!-- <div (click)="h1Variable.innerHTML = childComponent.getNameAndGender()" > -->
+    <div class="pointerCursor" (click)="onClick(employee.id)">
     <app-display-employee [employee]="employee" #childComponent></app-display-employee>
   </div>
 </div>
