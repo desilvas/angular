@@ -11,12 +11,16 @@ export class DisplayEmployeeComponent implements OnInit {
   @Input()
   employee: Employee;
   
-
-  @Output() notify: EventEmitter<Employee> = new EventEmitter<Employee>();
-
-  handleClick() {
-    this.notify.emit(this.employee);
+  getNameAndGender(): string {
+    return this.employee.name + ' ' + this.employee.gender;
   }
+  
+  // Parent Child Component 
+  // @Output() notify: EventEmitter<Employee> = new EventEmitter<Employee>();
+
+  // handleClick() {
+  //   this.notify.emit(this.employee);
+  // }
   
   // set employee(val: Employee) {
   //   // console.log('Previous : ' + (this._employee ? this._employee.name : 'NULL'));

@@ -1,9 +1,14 @@
-<h1 *ngIf="dataFromChild">
-    {{ dataFromChild?.name + ' ' + dataFromChild?.gender }}
+<!-- <h1  *ngIf="dataFromChild"> -->
+    <h1 #h1Variable>
+    
+  <!-- {{ dataFromChild?.name + ' ' + dataFromChild?.gender }} -->
 </h1>
 
 <div class="panel panel-primary" *ngFor="let employee of employees">
-  <app-display-employee [employee]="employee" (notify)="handleNotify($event)"></app-display-employee>
+  <!-- <app-display-employee [employee]="employee" (notify)="handleNotify($event)"></app-display-employee> -->
+  <div (click)="h1Variable.innerHTML = childComponent.getNameAndGender()" >
+    <app-display-employee [employee]="employee" #childComponent></app-display-employee>
+  </div>
 </div>
 
 <!-- <button (click)="nextEmployee()" class="btn btn-primary">
@@ -15,7 +20,7 @@
     <app-display-employee [employee]="employeeToDisplay"></app-display-employee>  
 </div> -->
 
-  
+
 <!-- <div class="panel-heading">
     <h3 class="panel-title">{{employee.name}}</h3>
   </div>
