@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges , Output, EventEmitter } from '@angular/core';
 import { Employee } from '../models/employee.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-display-employee',
@@ -10,6 +11,7 @@ import { Employee } from '../models/employee.model';
 export class DisplayEmployeeComponent implements OnInit {
   @Input()
   employee: Employee;
+  selectedEmployeeId: number;
   
   getNameAndGender(): string {
     return this.employee.name + ' ' + this.employee.gender;
@@ -35,9 +37,10 @@ export class DisplayEmployeeComponent implements OnInit {
 
   //@Input()
   //employee: Employee;
-  constructor() { }
+  constructor(private _route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.selectedEmployeeId = +this._route.snapshot.paramMap.get('id');
   }
 
   // This life cycle hook receives SimpleChanges as an Input parameter
