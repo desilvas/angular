@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Department } from '../models/departments.model';
 import { Employee } from '../models/employee.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { EmployeeService } from '../employees/employee.service';
 
 @Component({
@@ -13,22 +13,22 @@ import { EmployeeService } from '../employees/employee.service';
 export class CreateEmployeeComponent implements OnInit {
 
   @ViewChild('employeeForm') public createEmployeeForm: NgForm;
-  
+  panelTitle: string;
   gender = 'male';
   previewPhoto = false;
 
-  employee: Employee = {
-    id: null,
-    name: null,
-    gender: null,
-    contactPreference: null,
-    phoneNumber: null,
-    email: '',
-    dateOfBirth: null,
-    department: "select",
-    isActive: null,
-    photoPath: null
-  };
+  employee: Employee; // = {
+  //   id: null,
+  //   name: null,
+  //   gender: null,
+  //   contactPreference: null,
+  //   phoneNumber: null,
+  //   email: '',
+  //   dateOfBirth: null,
+  //   department: "select",
+  //   isActive: null,
+  //   photoPath: null
+  // };
 
   departments: Department[] = [
     { id: 1, name: 'Help Desk' },
@@ -38,17 +38,52 @@ export class CreateEmployeeComponent implements OnInit {
   ];
 
   constructor(private _employeeService: EmployeeService,
-    private _router: Router) { }
+    private _router: Router, private _route: ActivatedRoute) { }
   togglePhotoPreview() {
     this.previewPhoto = !this.previewPhoto;
   }
 
   ngOnInit() {
+    this._route.paramMap.subscribe(parameterMap => {
+      const id = +parameterMap.get('id');
+      this.getEmployee(id);
+    })
+  }
 
+  getEmployee(id: number) {
+    if (id === 0) {
+      this.employee = {
+        id: null,
+        name: null,
+        gender: null,
+        contactPreference: null,
+        phoneNumber: null,
+        email: '',
+        dateOfBirth: null,
+        department: "select",
+        isActive: null,
+        photoPath: null
+      };
+      this.createEmployeeForm.reset();
+
+      this.panelTitle = 'Create Employee';
+    }
+    else {
+      this.panelTitle = 'Edit Employee';
+      this.employee = Object.assign({}, this._employeeService.getEmployee(id));
+    }
   }
 
   saveEmployee(): void {
-    this._employeeService.save(this.employee);
+    const newEmployee = Object.assign({}, this.employee);
+    this._employeeService.save(newEmployee);
+    this.createEmployeeForm.reset();
+    //empForm.reset();
     this._router.navigate(['list']);
   }
+
+  // saveEmployee(): void {
+  //   this._employeeService.save(this.employee);
+  //   this._router.navigate(['list']);
+  // }
 }

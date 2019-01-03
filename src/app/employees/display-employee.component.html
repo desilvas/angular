@@ -1,5 +1,5 @@
 <!-- <div class="panel panel-primary" (click)="handleClick()" > -->
-    <div class="panel panel-primary" [class.panel-success]="selectedEmployeeId === employee.id">
+<div class="panel panel-primary" [class.panel-success]="selectedEmployeeId === employee.id">
   <div class="panel-heading">
     <h3 class="panel-title">{{employee.name}}</h3>
   </div>
@@ -78,5 +78,10 @@
 
       </div>
     </div>
+  </div>
+  <div class="panel-footer">
+    <button class="btn btn-primary" (click)="viewEmployee()">View</button>
+    <button class="btn btn-primary" (click)="editEmployee()">Edit</button>
+    <button class="btn btn-danger">Delete</button>
   </div>
 </div>

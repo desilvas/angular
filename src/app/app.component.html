@@ -4,11 +4,15 @@
             <li>
                 <a routerLink="list">List</a>
             </li>
-            <li>
+            <!-- <li>
                 <a routerLink="create">Create</a>
-            </li>
+            </li> -->
+            <li>
+                    <a routerLink="edit/0">Create</a>
+                </li>
         </ul>
     </nav>
+    <div *ngIf="showLoadingIndicator" class="spinner"></div>
     <router-outlet></router-outlet>
 </div>
 

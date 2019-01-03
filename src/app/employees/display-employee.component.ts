@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges , Output, EventEmitter } from '@angular/core';
 import { Employee } from '../models/employee.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-display-employee',
@@ -13,10 +13,24 @@ export class DisplayEmployeeComponent implements OnInit {
   employee: Employee;
   selectedEmployeeId: number;
   
+  @Input() searchTerm : string;
+
   getNameAndGender(): string {
     return this.employee.name + ' ' + this.employee.gender;
   }
   
+
+  viewEmployee(){
+    this._router.navigate(['employees', this.employee.id], {
+      queryParams: { 'searchTerm': this.searchTerm }
+    });
+  }
+
+  editEmployee(){
+    this._router.navigate(['/edit', this.employee.id], {      
+    });
+  }
+
   // Parent Child Component 
   // @Output() notify: EventEmitter<Employee> = new EventEmitter<Employee>();
 
@@ -37,7 +51,7 @@ export class DisplayEmployeeComponent implements OnInit {
 
   //@Input()
   //employee: Employee;
-  constructor(private _route: ActivatedRoute) { }
+  constructor(private _route: ActivatedRoute, private _router: Router) { }
 
   ngOnInit() {
     this.selectedEmployeeId = +this._route.snapshot.paramMap.get('id');
