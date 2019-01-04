@@ -70,17 +70,47 @@ export class CreateEmployeeComponent implements OnInit {
     }
     else {
       this.panelTitle = 'Edit Employee';
-      this.employee = Object.assign({}, this._employeeService.getEmployee(id));
+      // this.employee = Object.assign({}, this._employeeService.getEmployee(id));
+
+      this._employeeService.getEmployee(id).subscribe(
+        (employee) => { this.employee = employee; },
+        (err: any) => console.log(err)
+      );
     }
   }
 
-  saveEmployee(): void {
-    const newEmployee = Object.assign({}, this.employee);
-    this._employeeService.save(newEmployee);
-    this.createEmployeeForm.reset();
-    //empForm.reset();
-    this._router.navigate(['list']);
+  saveEmployee(empForm: NgForm): void {
+    if(this.employee.id == null){
+      this._employeeService.addEmployee(this.employee).subscribe(
+        (data: Employee) => {
+          // log the employee object after the post is completed
+          console.log(data);
+          empForm.reset();
+          this._router.navigate(['list']);
+        },
+        (error: any) => { console.log(error); }
+      );
+    }else {
+      this._employeeService.updateEmployee(this.employee).subscribe(
+        () => {
+          // log the employee object after the post is completed
+         
+          empForm.reset();
+          this._router.navigate(['list']);
+        },
+        (error: any) => { console.log(error); }
+      );
+    }
+    
   }
+  
+  // saveEmployee(): void {
+  //   const newEmployee = Object.assign({}, this.employee);
+  //   this._employeeService.save(newEmployee);
+  //   this.createEmployeeForm.reset();
+  //   //empForm.reset();
+  //   this._router.navigate(['list']);
+  // }
 
   // saveEmployee(): void {
   //   this._employeeService.save(this.employee);
